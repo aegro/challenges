@@ -1,13 +1,11 @@
-package br.com.aegro.productiveareas;
+package br.com.aegro.fms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProductiveAreasApplication {
-
+public class FarmManagementSystemApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(ProductiveAreasApplication.class, args);
+		SpringApplication.run(FarmManagementSystemApplication.class, args);
 	}
-
 }
