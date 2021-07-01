@@ -1,12 +1,29 @@
 package br.com.aegro.fms.domain;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.Set;
 
+@Table(name = "farm")
+@Entity(name = "Farm")
 public class Farm {
-	private long id;
+
+	@Id
+	@GeneratedValue
+	private Long id;
+
+	@Column(nullable = false)
 	private String name;
+
+	@Column
 	private String observation;
-	private List<Field> fields;
+
+	@OneToMany(mappedBy = "id")
+	private Set<Field> fields;
 
 	public long getId() {
 		return id;
@@ -32,11 +49,11 @@ public class Farm {
 		this.observation = observation;
 	}
 
-	public List<Field> getFields() {
+	public Set<Field> getFields() {
 		return fields;
 	}
 
-	public void setFields(List<Field> fields) {
+	public void setFields(Set<Field> fields) {
 		this.fields = fields;
 	}
 }
