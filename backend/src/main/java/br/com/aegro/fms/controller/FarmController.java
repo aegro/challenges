@@ -1,10 +1,8 @@
 package br.com.aegro.fms.controller;
 
 import br.com.aegro.fms.domain.Farm;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import br.com.aegro.fms.domain.FarmRepository;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -12,16 +10,24 @@ import java.util.List;
 @RequestMapping("/rest/farms")
 public class FarmController {
 
+    private final FarmRepository farmRepository;
+
+    public FarmController(FarmRepository farmRepository) {
+        this.farmRepository = farmRepository;
+    }
+
     @GetMapping
     public List<Farm> get() {
-        return List.of();
+        return farmRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Farm getById(@PathVariable("id") long id) {
-        Farm farm = new Farm();
-        farm.setId(id);
-        farm.setName("Fazenda Aegro");
-        return farm;
+    public Farm getById(@PathVariable Long id) {
+        return farmRepository.findById(id).orElse(null);
+    }
+
+    @PostMapping
+    public Farm save(@RequestBody Farm farm) {
+        return farmRepository.save(farm);
     }
 }
