@@ -1,27 +1,40 @@
 package br.com.aegro.fms.controller;
 
 import br.com.aegro.fms.domain.Farm;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import br.com.aegro.fms.domain.FarmRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/farms")
 public class FarmController {
 
+    private final FarmRepository farmRepository;
+
+    public FarmController(FarmRepository farmRepository) {
+        this.farmRepository = farmRepository;
+    }
+
     @GetMapping
-    public List<Farm> get() {
-        return List.of();
+    public ResponseEntity<List<Farm>> get() {
+        return ResponseEntity.ok(farmRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public Farm getById(@PathVariable("id") long id) {
-        Farm farm = new Farm();
-        farm.setId(id);
-        farm.setName("Fazenda Aegro");
-        return farm;
+    public ResponseEntity<Farm> getById(@PathVariable Long id) {
+        Optional<Farm> farm = farmRepository.findById(id);
+        if (farm.isPresent()) {
+            return ResponseEntity.ok(farm.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Farm> save(@RequestBody Farm farm) {
+        return new ResponseEntity<>(farmRepository.save(farm), HttpStatus.CREATED);
     }
 }
