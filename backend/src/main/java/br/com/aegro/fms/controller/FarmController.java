@@ -21,10 +21,6 @@ public class FarmController {
 
     @GetMapping
     public ResponseEntity<List<Farm>> get() {
-        List<Farm> farms = farmRepository.findAll();
-        if (farms.isEmpty()) {
-            ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(farmRepository.findAll());
     }
 

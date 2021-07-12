@@ -21,10 +21,6 @@ public class FieldController {
 
     @GetMapping
     public ResponseEntity<List<Field>> get() {
-        List<Field> fields = fieldRepository.findAll();
-        if (fields.isEmpty()) {
-            ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(fieldRepository.findAll());
     }
 
